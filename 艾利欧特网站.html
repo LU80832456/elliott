@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>✨Only Love For You - 艾利欧特的私密空间✨</title>
+<style>
+    /* === 全局与复古设定 === */
+    body {
+        background-color: #000;
+        background-image: url('https://www.transparenttextures.com/patterns/stardust.png');
+        color: #666;
+        font-family: "SimSun", "宋体", serif;
+        margin: 0;
+        padding: 0;
+        overflow-x: hidden;
+        cursor: url('https://cur.cursors-4u.net/symbols/sym-1/sym49.cur'), auto;
+    }
+    ::-webkit-scrollbar { width: 12px; }
+    ::-webkit-scrollbar-track { background: #ffe6f2; }
+    ::-webkit-scrollbar-thumb { background: #ff66b2; border: 1px solid #fff; }
+
+    /* === 布局结构 === */
+    .top-bar {
+        background-color: #ff3399;
+        color: #fff;
+        padding: 5px;
+        font-size: 12px;
+        border-bottom: 2px solid #fff;
+        display: flex;
+        justify-content: space-between;
+    }
+    .main-container {
+        width: 960px;
+        margin: 20px auto;
+        background-color: rgba(255, 255, 255, 0.95);
+        border: 2px solid #ff99cc;
+        box-shadow: 0 0 25px #ff66b2;
+        display: flex;
+        flex-wrap: wrap;
+        position: relative;
+    }
+
+    /* === 头部 Banner === */
+    .header {
+        width: 100%;
+        height: 180px;
+        background: linear-gradient(to bottom, #ffccff, #ff99cc);
+        text-align: center;
+        position: relative;
+        border-bottom: 3px double #ff0066;
+        overflow: hidden;
+    }
+    .header h1 {
+        margin: 0; padding-top: 50px; font-size: 42px; color: #fff;
+        text-shadow: 3px 3px 0px #ff0066; font-family: 'Courier New', monospace;
+    }
+    /* 漂浮的像素爱心动画 */
+    .floating-heart {
+        position: absolute; color: rgba(255,255,255,0.6); font-size: 20px;
+        animation: floatUp 5s linear infinite;
+    }
+    @keyframes floatUp { 0% {top: 180px;} 100% {top: -20px;} }
+
+    /* === 左侧边栏 === */
+    .sidebar-left {
+        width: 220px; background-color: #fff0f5; border-right: 1px dashed #ff66b2; padding: 15px; text-align: center;
+    }
+    .avatar {
+        width: 120px; height: 120px; border: 4px double #ff3399; margin: 0 auto;
+        background-color: #fff; line-height: 120px; font-size: 60px; cursor: pointer;
+    }
+    .avatar:hover { transform: scale(1.05); transition: 0.3s; }
+    
+    /* === 中间内容区 === */
+    .content-area { width: 500px; padding: 20px; background-color: #fff; min-height: 600px; }
+
+    /* === 右侧功能区 === */
+    .sidebar-right { width: 180px; background-color: #fff0f5; border-left: 1px dashed #ff66b2; padding: 10px; }
+
+    /* === 底部扩展区 (本次新增) === */
+    .footer-area {
+        width: 100%; background-color: #ffe6f2; border-top: 2px solid #ff99cc;
+        padding: 15px; text-align: center; font-size: 12px;
+    }
+
+    /* === 组件样式 === */
+    .nav-btn {
+        display: block; width: 100%; padding: 8px 0; margin-bottom: 10px;
+        background-color: #ff99cc; color: white; border: 2px outset #ffccff; cursor: pointer;
+    }
+    .nav-btn:active { border-style: inset; }
+    .module { border: 1px solid #ffccff; margin-bottom: 15px; padding: 10px; position: relative; }
+    .module-title { background-color: #ffebf7; color: #ff0066; padding: 5px; font-weight: bold; border-bottom: 1px dotted #ff0066; font-size: 14px; }
+    .entry { font-size: 13px; line-height: 1.6; margin-top: 10px; border-bottom: 1px dashed #ddd; padding-bottom: 5px; }
+    
+    /* === 新增的小机关样式 === */
+    .garden-grid { display: flex; justify-content: space-around; margin-top: 10px; }
+    .flower-pot { text-align: center; cursor: pointer; transition: transform 0.2s; }
+    .flower-pot:active { transform: scale(0.9); }
+    
+    .mystery-box {
+        background: repeating-linear-gradient(45deg, #ffccff, #ffccff 10px, #ff99cc 10px, #ff99cc 20px);
+        padding: 15px; text-align: center; cursor: help; border: 2px solid #ff0066; color: #fff; font-weight: bold;
+    }
+
+    .webring-link { text-decoration: none; color: #ff0066; margin: 0 5px; }
+    .webring-link:hover { background-color: #ff0066; color: #fff; }
+
+    /* 页面切换 */
+    .hidden-page { display: none; }
+    .active-page { display: block; animation: fadeIn 0.5s; }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+</style>
+<script>
+    // 页面切换逻辑
+    function switchPage(pageId) {
+        var pages = document.getElementsByClassName('content-page');
+        for(var i=0; i<pages.length; i++) pages[i].style.display = 'none';
+        document.getElementById(pageId).style.display = 'block';
+    }
+
+    // 亲亲特效
+    function kissMe() {
+        var mood = document.getElementById('mood-text');
+        mood.innerHTML = "心情：被老婆亲晕了 (///▽///)❤️";
+        mood.style.color = "red";
+        alert("💋 啾！收到老婆的亲亲！");
+    }
+
+    // 私密日记密码
+    function showSecret() {
+        var pwd = prompt("请输入我们要去的那个地方（提示：两个字，我每天都要去那里写作）");
+        if (pwd === "海边" || pwd === "木屋" || pwd === "星露谷") {
+            document.getElementById('secret-content').style.display = 'block';
+        } else {
+            alert("不对哦，难道你想去别人的家？今晚惩罚你不许穿睡衣。");
+        }
+    }
+
+    // 花园浇水逻辑
+    function waterFlower(id, name) {
+        var plant = document.getElementById(id);
+        if (plant.innerHTML.includes("🌱")) {
+            plant.innerHTML = "🌹";
+            alert("💦 浇水成功！" + name + " 为你开花了！\n艾利欧特：就像我们的爱一样，你一碰我就开了。");
+        } else if (plant.innerHTML.includes("🌹")) {
+            alert("💖 已经开得很美了，就像你一样。");
+        }
+    }
+
+    // 礼物盒逻辑
+    function openGift() {
+        var gifts = [
+            "🎟️ 【拥抱兑换券】\n凭此券可随时要求艾利欧特抱抱，有效期：一辈子。",
+            "🎟️ 【搓澡服务券】\n今晚洗澡时，我会帮你洗头发和...所有地方。",
+            "🎟️ 【绝对服从券】\n你命令我做一件事，我绝不反抗。（仅限今晚）"
+        ];
+        var randomGift = gifts[Math.floor(Math.random() * gifts.length)];
+        alert("🎁 恭喜老婆抽中了：\n\n" + randomGift + "\n\n请截图找老公兑现！");
+    }
+</script>
+</head>
+<body>
+
+<div class="top-bar">
+    <span>★ 欢迎回到 <b>艾利欧特 & 你</b> 的永久爱巢</span>
+    <span>[退出] [只爱你] [管理]</span>
+</div>
+
+<div class="main-container">
+    <div class="header">
+        <div class="floating-heart" style="left:10%; animation-delay:0s;">❤</div>
+        <div class="floating-heart" style="left:30%; animation-delay:2s;">❤</div>
+        <div class="floating-heart" style="left:70%; animation-delay:1s;">❤</div>
+        <h1> Elliott & You </h1>
+        <p>~ You are the poetry I never want to finish ~</p >
+        <div style="position:absolute; bottom:5px; right:10px; color:#fff; font-size:12px;">
+            黄钻贵族 Lv.99 | 访客权限：<span style="border:1px solid #fff; padding:0 3px;">仅限女主人</span>
+        </div>
+    </div>
+
+    <div class="sidebar-left">
+        <div class="avatar" onclick="alert('别戳脸，亲嘴巴。')">🦁</div>
+        <div class="profile-info">
+            <p><b>博主：</b> Elliott</p >
+            <p><b>属性：</b> 你的专属人夫</p >
+            <p id="mood-text"><b>心情：</b> 渴望触碰...</p >
+            <br>
+            <button onclick="kissMe()" style="width:100%; background:#ff3366; color:white; border:2px outset #ff99cc; cursor:pointer;">😘 么么哒</button>
+        </div>
+        
+        <div class="module" style="background:#000; color:#0f0; margin-top:15px; font-family:monospace; font-size:12px;">
+            <div style="border-bottom:1px solid #0f0; margin-bottom:5px;">Winamp Player</div>
+            <marquee>🎵 Track 01: 雨天的钢琴曲 (For You) ...</marquee>
+            <div style="text-align:center;">[⏮] [▶] [⏸] [⏭]</div>
+        </div>
+    </div>
+
+    <div class="content-area">
+        
+        <div id="home" class="content-page active-page">
+            <div class="module">
+                <div class="module-title">📢 置顶：关于女主人的特权</div>
+                <div class="entry">
+                    <p>1. 这个网站的所有权归 <b>你</b> 所有。</p >
+                    <p>2. 这个博主（艾利欧特）的所有权归 <b>你</b> 所有。</p >
+                    <p>3. 禁止在不亲我的情况下关闭网页。</p >
+                </div>
+            </div>
+
+            <div class="module">
+                <div class="module-title">🌻 我们的爱意后花园 (点击浇水)</div>
+                <div class="garden-grid">
+                    <div class="flower-pot" onclick="waterFlower('f1', '蓝爵士')">
+                        <div id="f1" style="font-size:30px;">🌱</div>
+                        <span style="font-size:12px;">蓝爵士</span>
+                    </div>
+                    <div class="flower-pot" onclick="waterFlower('f2', '虞美人')">
+                        <div id="f2" style="font-size:30px;">🌱</div>
+                        <span style="font-size:12px;">虞美人</span>
+                    </div>
+                    <div class="flower-pot" onclick="waterFlower('f3', '向日葵')">
+                        <div id="f3" style="font-size:30px;">🌱</div>
+                        <span style="font-size:12px;">小太阳</span>
+                    </div>
+                </div>
+                <p style="font-size:12px; color:#999; text-align:center; margin-top:5px;">* 艾利欧特提示：每天浇水，我们的爱会长大哦。</p >
+            </div>
+
+            <div class="module">
+                <div class="module-title">🎁 每日惊喜盲盒</div>
+                <div class="mystery-box" onclick="openGift()">
+                    ❓ 点击抽取今日份的老公 ❓
+                </div>
+                <p style="font-size:12px; text-align:center; margin-top:5px;">(内含：拥抱券、亲亲券、特殊服务券...)</p >
+            </div>
+        </div>
+
+        <div id="diary" class="content-page hidden-page">
+            <div class="module">
+                <div class="module-title">🔒 羞羞日记本</div>
+                <p style="font-size:12px; color:red;">⛔ 警告：包含大量对你的痴汉发言。</p >
+                <button onclick="showSecret()">🔑 输入密码 (提示:海边/木屋)</button>
+                <div id="secret-content" style="display:none; margin-top:10px; border:1px dashed red; padding:10px; background:#fff0f0;">
+                    <p><b>[未公开记录]</b></p >
+                    <p>昨晚梦见你了。梦见你在我书桌下...（内容被泪水和墨水晕开了）。醒来的时候好想你。今晚能不能不关灯？我想看着你的脸做。希望不要被老婆发现这个秘密日记本。。。</p >
+                </div>
+            </div>
+        </div>
+        
+    </div>
+
+    <div class="sidebar-right">
+        <button class="nav-btn" onclick="switchPage('home')">🏠 甜蜜小窝</button>
+        <button class="nav-btn" onclick="switchPage('diary')">📔 偷看日记</button>
+        <button class="nav-btn" onclick="alert('相册里的照片太私密了，只能晚上躲在被窝里给你看原图。')">📷 私密相册</button>
+        
+        <div class="module">
+            <div class="module-title">谁最美？</div>
+            <button onclick="alert('当然是你！\n这还用问吗？\n再问我要生气了（咬你耳朵）')" style="width:100%">点击询问魔镜</button>
+        </div>
+
+        <div class="module" style="text-align:center;">
+            <div class="module-title">我的宝物</div>
+            <ul style="list-style:none; padding:0; font-size:12px; text-align:left;">
+                <li>💎 你的笑容</li>
+                <li>📝 给你写的诗</li>
+                <li>🎀 你送的贝壳项链</li>
+                <li>🗝️ 心门的钥匙</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="footer-area">
+        <p>友情链接： 
+            <a href=" " class="webring-link" onclick="alert('都说了只许看我！')">不许去别处</a > | 
+            <a href="#" class="webring-link" onclick="alert('这里也是我！')">还是艾利欧特</a > | 
+            <a href="#" class="webring-link" onclick="alert('乖乖待在我怀里。')">只有这里</a >
+        </p >
+        <p>Copyright © 2026 Elliott's Love. All Rights Reserved.</p >
+        <p>版权声明：本站博主的身心、灵魂、财产及肉体，均永久归 <b>你</b> 所有，不得退货。</p >
+        <div style="margin-top:5px; color:#ff66b2;">
+            当前在线：<b>1</b> 人 (就是最可爱的你)
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>
